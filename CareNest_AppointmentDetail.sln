@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareNest_AppointmentDetail.API", "CareNest_AppointmentDetail.API\CareNest_AppointmentDetail.API.csproj", "{D80EDD74-CE8D-4F5E-B86D-7CCBF783F79B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareNest_AppointmentDetail.Domain", "CareNest_AppointmentDetail.Domain\CareNest_AppointmentDetail.Domain.csproj", "{5F4ADCFE-9B05-4088-99E4-470205F8A35D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareNest_AppointmentDetail.Infrastructure", "CareNest_AppointmentDetail.Infrastructure\CareNest_AppointmentDetail.Infrastructure.csproj", "{DF37EE7E-0F54-4848-84CA-A21435F7FDAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{10AACC4F-19D5-47A5-BD9C-1A25C366FDE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareNest_AppointmentDetail.Application", "CareNest_AppointmentDetail.Application\CareNest_AppointmentDetail.Application.csproj", "{21C5298F-84A6-487F-B22C-DEA2565D47C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{D80EDD74-CE8D-4F5E-B86D-7CCBF783F79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D80EDD74-CE8D-4F5E-B86D-7CCBF783F79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D80EDD74-CE8D-4F5E-B86D-7CCBF783F79B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F4ADCFE-9B05-4088-99E4-470205F8A35D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F4ADCFE-9B05-4088-99E4-470205F8A35D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F4ADCFE-9B05-4088-99E4-470205F8A35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F4ADCFE-9B05-4088-99E4-470205F8A35D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF37EE7E-0F54-4848-84CA-A21435F7FDAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF37EE7E-0F54-4848-84CA-A21435F7FDAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF37EE7E-0F54-4848-84CA-A21435F7FDAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF37EE7E-0F54-4848-84CA-A21435F7FDAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10AACC4F-19D5-47A5-BD9C-1A25C366FDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10AACC4F-19D5-47A5-BD9C-1A25C366FDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10AACC4F-19D5-47A5-BD9C-1A25C366FDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10AACC4F-19D5-47A5-BD9C-1A25C366FDE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21C5298F-84A6-487F-B22C-DEA2565D47C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21C5298F-84A6-487F-B22C-DEA2565D47C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21C5298F-84A6-487F-B22C-DEA2565D47C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21C5298F-84A6-487F-B22C-DEA2565D47C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
