@@ -1,12 +1,11 @@
-﻿using CareNest_Appointment.Application.Features.Queries.GetById;
-using CareNest_Appointment.Application.Interfaces.CQRS.Queries;
-using CareNest_Appointment.Application.Interfaces.UOW;
-using CareNest_Appointment.Domain.Commons.Constant;
-using CareNest_Appointment.Domain.Entitites;
+﻿using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
+using CareNest_AppointmentDetail.Application.Interfaces.UOW;
+using CareNest_AppointmentDetail.Domain.Commons.Constant;
+using CareNest_AppointmentDetail.Domain.Entitites;
 
-namespace CareNest_Appointment.Application.Features.Queries.GetById
+namespace CareNest_AppointmentDetail.Application.Features.Queries.GetById
 {
-    public class GetByIdQueryHandler : IQueryHandler<GetByIdQuery, Appointment>
+    public class GetByIdQueryHandler : IQueryHandler<GetByIdQuery, AppointmentDetail>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -15,9 +14,9 @@ namespace CareNest_Appointment.Application.Features.Queries.GetById
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Appointment> HandleAsync(GetByIdQuery query)
+        public async Task<AppointmentDetail> HandleAsync(GetByIdQuery query)
         {
-            Appointment? appointment = await _unitOfWork.GetRepository<Appointment>().GetByIdAsync(query.Id);
+            AppointmentDetail? appointment = await _unitOfWork.GetRepository<AppointmentDetail>().GetByIdAsync(query.Id);
 
             if (appointment == null)
             {

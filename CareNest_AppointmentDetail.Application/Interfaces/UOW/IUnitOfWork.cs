@@ -1,6 +1,6 @@
-﻿using CareNest_Appointment.Domain.Repositories;
+﻿using CareNest_AppointmentDetail.Domain.Repositories;
 
-namespace CareNest_Appointment.Application.Interfaces.UOW
+namespace CareNest_AppointmentDetail.Application.Interfaces.UOW
 {
     public interface IUnitOfWork : IDisposable
     {

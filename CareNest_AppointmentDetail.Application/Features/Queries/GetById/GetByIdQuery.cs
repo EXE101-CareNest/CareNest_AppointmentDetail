@@ -1,9 +1,9 @@
-﻿using CareNest_Appointment.Application.Interfaces.CQRS.Queries;
-using CareNest_Appointment.Domain.Entitites;
+﻿using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
+using CareNest_AppointmentDetail.Domain.Entitites;
 
-namespace CareNest_Appointment.Application.Features.Queries.GetById
+namespace CareNest_AppointmentDetail.Application.Features.Queries.GetById
 {
-    public class GetByIdQuery : IQuery<Appointment>
+    public class GetByIdQuery : IQuery<AppointmentDetail>
     {
         public required string Id { get; set; }
     }

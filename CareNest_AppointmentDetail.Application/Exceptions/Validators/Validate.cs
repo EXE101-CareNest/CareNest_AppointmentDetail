@@ -1,9 +1,9 @@
-﻿using CareNest_Appointment.Application.Features.Commands.Create;
-using CareNest_Appointment.Application.Features.Commands.Update;
-using CareNest_Appointment.Domain.Commons.Constant;
+﻿using CareNest_AppointmentDetail.Application.Features.Commands.Create;
+using CareNest_AppointmentDetail.Application.Features.Commands.Update;
+using CareNest_AppointmentDetail.Domain.Commons.Constant;
 using System.Text.RegularExpressions;
 
-namespace CareNest_Appointment.Application.Exceptions.Validators
+namespace CareNest_AppointmentDetail.Application.Exceptions.Validators
 {
     public class Validate
     {
@@ -13,7 +13,7 @@ namespace CareNest_Appointment.Application.Exceptions.Validators
         /// <param name="command"></param>
         public static void ValidateCreate(CreateCommand command)
         {
-            //ValidatePaymentMethod(command.PaymentMethod);
+            ValidateQuantity(command.PetQuantity);
         }
         /// <summary>
         /// kiểm tra cập nhật cuộc hẹn 
@@ -21,22 +21,18 @@ namespace CareNest_Appointment.Application.Exceptions.Validators
         /// <param name="command"></param>
         public static void ValidateUpdate(UpdateCommand command)
         {
-            //ValidatePaymentMethod(command.PaymentMethod);
+            ValidateQuantity(command.PetQuantity);
         }
-        /// <summary>
-        /// Valid paymentMethod 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <exception cref="BadRequestException"></exception>
-        //public static void ValidatePaymentMethod(string? paymentMethod)
-        //{
-        //    //-Không được để trống.
-        //    if (string.IsNullOrWhiteSpace(paymentMethod))
-        //    {
-        //        throw new BadRequestException(MessageConstant.MissingPaymentMethod);
-        //    }
-          
-        //}
-        
+
+        public static void ValidateQuantity(int? quantity)
+        {
+           
+            if (quantity <= 0)
+            {
+                throw new BadRequestException(MessageConstant.InvalidQuantity);
+            }
+
+        }
+
     }
 }

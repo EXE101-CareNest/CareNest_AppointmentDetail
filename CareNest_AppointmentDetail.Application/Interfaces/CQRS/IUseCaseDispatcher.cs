@@ -1,7 +1,7 @@
-﻿using CareNest_Appointment.Application.Interfaces.CQRS.Commands;
-using CareNest_Appointment.Application.Interfaces.CQRS.Queries;
+﻿using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
 
-namespace CareNest_Appointment.Application.Interfaces.CQRS
+namespace CareNest_AppointmentDetail.Application.Interfaces.CQRS
 {
     public interface IUseCaseDispatcher
     {

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CareNest_Appointment.Application.Common
+namespace CareNest_AppointmentDetail.Application.Common
 {
     public static class ObjectMapperExtensions
     {

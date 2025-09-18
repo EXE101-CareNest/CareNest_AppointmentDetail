@@ -1,4 +1,4 @@
-﻿namespace CareNest_Appointment.Application.Exceptions
+﻿namespace CareNest_AppointmentDetail.Application.Exceptions
 {
     public class InternalException : Exception
     {

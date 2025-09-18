@@ -1,5 +1,5 @@
 ﻿
-namespace CareNest_Appointment.Application.Interfaces.Services
+namespace CareNest_AppointmentDetail.Application.Interfaces.Services
 {
     public interface ICurrentUserService
     {

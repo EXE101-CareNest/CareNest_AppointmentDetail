@@ -1,10 +1,10 @@
-﻿using CareNest_Appointment.Application.Common;
-using CareNest_Appointment.Application.Interfaces.CQRS.Queries;
+﻿using CareNest_AppointmentDetail.Application.Common;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
 
 
-namespace CareNest_Appointment.Application.Features.Queries.GetAllPaging
+namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
 {
-    public class GetAllPagingQuery : IQuery<PageResult<AppointmentResponse>>
+    public class GetAllPagingQuery : IQuery<PageResult<AppointmentDetailResponse>>
     {
         public int Index { get; set; }
         public int PageSize { get; set; }

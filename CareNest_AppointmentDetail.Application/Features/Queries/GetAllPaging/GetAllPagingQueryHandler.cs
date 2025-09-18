@@ -1,11 +1,11 @@
-﻿using CareNest_Appointment.Application.Common;
-using CareNest_Appointment.Application.Interfaces.CQRS.Queries;
-using CareNest_Appointment.Application.Interfaces.UOW;
-using CareNest_Appointment.Domain.Entitites;
+﻿using CareNest_AppointmentDetail.Application.Common;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
+using CareNest_AppointmentDetail.Application.Interfaces.UOW;
+using CareNest_AppointmentDetail.Domain.Entitites;
 
-namespace CareNest_Appointment.Application.Features.Queries.GetAllPaging
+namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
 {
-    public class GetAllPagingQueryHandler : IQueryHandler<GetAllPagingQuery, PageResult<AppointmentResponse>>
+    public class GetAllPagingQueryHandler : IQueryHandler<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -14,24 +14,24 @@ namespace CareNest_Appointment.Application.Features.Queries.GetAllPaging
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<PageResult<AppointmentResponse>> HandleAsync(GetAllPagingQuery query)
+        public async Task<PageResult<AppointmentDetailResponse>> HandleAsync(GetAllPagingQuery query)
         {
-            var selector = ObjectMapperExtensions.CreateMapExpression<Appointment, AppointmentResponse>();
+            var selector = ObjectMapperExtensions.CreateMapExpression<AppointmentDetail, AppointmentDetailResponse>();
 
             var orderByFunc = GetOrderByFunc(query.SortColumn, query.SortDirection);
 
-            IEnumerable<AppointmentResponse> a = await _unitOfWork.GetRepository<Appointment>().FindAsync(
+            IEnumerable<AppointmentDetailResponse> a = await _unitOfWork.GetRepository<AppointmentDetail>().FindAsync(
                 predicate: null,
                 orderBy: orderByFunc,
                 selector: selector,
                 pageSize: query.PageSize,
                 pageIndex: query.Index);
 
-            return new PageResult<AppointmentResponse>(a, 1, query.PageSize, query.Index);
+            return new PageResult<AppointmentDetailResponse>(a, 1, query.PageSize, query.Index);
         }
 
 
-        private Func<IQueryable<Appointment>, IOrderedQueryable<Appointment>> GetOrderByFunc(string? sortColumn, string? sortDirection)
+        private Func<IQueryable<AppointmentDetail>, IOrderedQueryable<AppointmentDetail>> GetOrderByFunc(string? sortColumn, string? sortDirection)
         {
             var ascending = string.IsNullOrWhiteSpace(sortDirection) || sortDirection.ToLower() != "desc";
 

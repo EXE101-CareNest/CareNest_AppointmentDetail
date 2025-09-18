@@ -1,9 +1,9 @@
-﻿using CareNest_Appointment.Application.Interfaces.CQRS;
-using CareNest_Appointment.Application.Interfaces.CQRS.Commands;
-using CareNest_Appointment.Application.Interfaces.CQRS.Queries;
+﻿using CareNest_AppointmentDetail.Application.Interfaces.CQRS;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CareNest_Appointment.Application.UseCases
+namespace CareNest_AppointmentDetail.Application.UseCases
 {
     public class UseCaseDispatcher : IUseCaseDispatcher
     {

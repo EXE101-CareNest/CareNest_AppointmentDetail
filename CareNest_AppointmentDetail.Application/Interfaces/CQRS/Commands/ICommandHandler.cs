@@ -1,4 +1,4 @@
-﻿namespace CareNest_Appointment.Application.Interfaces.CQRS.Commands
+﻿namespace CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {

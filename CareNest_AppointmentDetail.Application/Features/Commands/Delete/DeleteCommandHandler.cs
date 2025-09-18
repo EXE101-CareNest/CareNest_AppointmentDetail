@@ -1,10 +1,10 @@
-﻿using CareNest_Appointment.Application.Exceptions;
-using CareNest_Appointment.Application.Interfaces.CQRS.Commands;
-using CareNest_Appointment.Application.Interfaces.UOW;
-using CareNest_Appointment.Domain.Commons.Constant;
-using CareNest_Appointment.Domain.Entitites;
+﻿using CareNest_AppointmentDetail.Application.Exceptions;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
+using CareNest_AppointmentDetail.Application.Interfaces.UOW;
+using CareNest_AppointmentDetail.Domain.Commons.Constant;
+using CareNest_AppointmentDetail.Domain.Entitites;
 
-namespace CareNest_Appointment.Application.Features.Commands.Delete
+namespace CareNest_AppointmentDetail.Application.Features.Commands.Delete
 {
     public class DeleteCommandHandler : ICommandHandler<DeleteCommand>
     {
@@ -18,10 +18,10 @@ namespace CareNest_Appointment.Application.Features.Commands.Delete
         public async Task HandleAsync(DeleteCommand command)
         {
             // Lấy order theo ID
-            Appointment? appointment = await _unitOfWork.GetRepository<Appointment>().GetByIdAsync(command.Id)
+            AppointmentDetail? appointmentDetail = await _unitOfWork.GetRepository<AppointmentDetail>().GetByIdAsync(command.Id)
                                               ?? throw new BadRequestException("Id: " + MessageConstant.NotFound);
 
-            _unitOfWork.GetRepository<Appointment>().Delete(appointment);
+            _unitOfWork.GetRepository<AppointmentDetail>().Delete(appointmentDetail);
 
             await _unitOfWork.SaveAsync();
         }

@@ -1,4 +1,4 @@
-﻿namespace CareNest_Appointment.Application.Common
+﻿namespace CareNest_AppointmentDetail.Application.Common
 {
     public class JwtSettings
     {
