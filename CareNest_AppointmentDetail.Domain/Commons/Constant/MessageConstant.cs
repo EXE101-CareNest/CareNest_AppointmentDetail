@@ -13,8 +13,8 @@
         public const string DuplicateRecord = "A record with the same key already exists.";
         public const string ValidationFailed = "Data validation failed.";
         public const string OperationFailed = "The operation could not be completed.";
-        //paymentMethod 
-        public const string MissingPaymentMethod = "Payment method cannot empty.";
+        //pet quantity
+        public const string InvalidQuantity = "Pet quantity must greater than 0";
 
         public const string WrongFormatField = "The field is wrong format.";
         public const string NoPermissionCompany = "You don't have permission to interact with this company";
