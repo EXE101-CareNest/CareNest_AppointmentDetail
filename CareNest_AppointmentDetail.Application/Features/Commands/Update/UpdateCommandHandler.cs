@@ -1,9 +1,9 @@
-﻿using CareNest_AppointmentDetail.Domain.Entitites;
-using CareNest_AppointmentDetail.Application.Exceptions;
+﻿using CareNest_AppointmentDetail.Application.Exceptions;
 using CareNest_AppointmentDetail.Application.Exceptions.Validators;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
 using CareNest_AppointmentDetail.Application.Interfaces.UOW;
 using CareNest_AppointmentDetail.Domain.Commons.Constant;
+using CareNest_AppointmentDetail.Domain.Entitites;
 using Shared.Helper;
 
 namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
@@ -27,7 +27,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
                ?? throw new BadRequestException("Id: " + MessageConstant.NotFound);
 
             appointmentDetail.Note = command.Note;
-            appointmentDetail.PetQuantity= command.PetQuantity;
+            appointmentDetail.PetQuantity = command.PetQuantity;
             appointmentDetail.ServiceDetailId = command.ServiceDetailId;
             appointmentDetail.AppointmentId = command.AppointmentId;
             appointmentDetail.TotalAmount = command.TotalAmount;

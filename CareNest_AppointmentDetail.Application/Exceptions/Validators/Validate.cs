@@ -1,7 +1,6 @@
 ﻿using CareNest_AppointmentDetail.Application.Features.Commands.Create;
 using CareNest_AppointmentDetail.Application.Features.Commands.Update;
 using CareNest_AppointmentDetail.Domain.Commons.Constant;
-using System.Text.RegularExpressions;
 
 namespace CareNest_AppointmentDetail.Application.Exceptions.Validators
 {
@@ -26,7 +25,7 @@ namespace CareNest_AppointmentDetail.Application.Exceptions.Validators
 
         public static void ValidateQuantity(int? quantity)
         {
-           
+
             if (quantity <= 0)
             {
                 throw new BadRequestException(MessageConstant.InvalidQuantity);

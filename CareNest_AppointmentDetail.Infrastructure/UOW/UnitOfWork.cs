@@ -1,8 +1,8 @@
-﻿using CareNest_AppointmentDetail.Infrastructure.Persistences.Repository;
-using CareNest_AppointmentDetail.Application.Interfaces.UOW;
-using CareNest_AppointmentDetail.Infrastructure.Persistences.Database;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using CareNest_AppointmentDetail.Application.Interfaces.UOW;
 using CareNest_AppointmentDetail.Domain.Repositories;
+using CareNest_AppointmentDetail.Infrastructure.Persistences.Database;
+using CareNest_AppointmentDetail.Infrastructure.Persistences.Repository;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CareNest_AppointmentDetail.Infrastructure.UOW
 {
