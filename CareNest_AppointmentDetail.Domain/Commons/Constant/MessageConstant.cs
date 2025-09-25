@@ -13,6 +13,8 @@
         public const string DuplicateRecord = "A record with the same key already exists.";
         public const string ValidationFailed = "Data validation failed.";
         public const string OperationFailed = "The operation could not be completed.";
+        public const string INVALID_INPUT = "Invalid input";
+        public const string BadRequest = "Bad request";
         //pet quantity
         public const string InvalidQuantity = "Pet quantity must greater than 0";
 

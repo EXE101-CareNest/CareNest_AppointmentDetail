@@ -1,5 +1,6 @@
 ﻿using CareNest_AppointmentDetail.API.Middleware;
 using CareNest_AppointmentDetail.Application.Common;
+using CareNest_AppointmentDetail.Application.Common.Options;
 using CareNest_AppointmentDetail.Application.Features.Commands.Create;
 using CareNest_AppointmentDetail.Application.Features.Commands.Delete;
 using CareNest_AppointmentDetail.Application.Features.Commands.Update;
@@ -94,11 +95,18 @@ builder.Services.AddScoped<ICommandHandler<DeleteCommand>, DeleteCommandHandler>
 //query
 builder.Services.AddScoped<IQueryHandler<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>, GetAllPagingQueryHandler>();
 builder.Services.AddScoped<IQueryHandler<GetByIdQuery, AppointmentDetail>, GetByIdQueryHandler>();
+builder.Services.Configure<APIServiceOption>(builder.Configuration.GetSection("APIService"));
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IAPIService, APIService>();
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("JwtSettings")
 );
 
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseUrls = true;
+});
 
 //Đăng ký cho FE
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -204,6 +212,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 //        }
 //    };
 //});
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 builder.Services.AddScoped<IUseCaseDispatcher, UseCaseDispatcher>();
 
@@ -216,6 +225,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    context.Database.Migrate();
 }
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 

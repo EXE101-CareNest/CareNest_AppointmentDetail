@@ -1,4 +1,5 @@
 ﻿using CareNest_AppointmentDetail.Application.Exceptions;
+using CareNest_AppointmentDetail.Domain.Commons.Base;
 using System.Net;
 using System.Text.Json;
 
@@ -78,13 +79,21 @@ namespace CareNest_AppointmentDetail.API.Middleware
             if (exception is BadRequestException badRequest)
             {
                 statusCode = (int)HttpStatusCode.BadRequest;
-
                 errorDetails = new
                 {
                     title = "Validation failed",
                     errors = badRequest.Errors.Any()
                     ? badRequest.Errors
                     : new List<string> { badRequest.Message }
+                };
+            }
+            else if (exception is BaseException.ErrorException errorException)
+            {
+                statusCode = errorException.StatusCode;
+                errorDetails = new
+                {
+                    title = errorException.ErrorDetail.ErrorCode,
+                    details = errorException.ErrorDetail.ErrorMessage
                 };
             }
             else if (exception is InternalException)
@@ -120,5 +129,6 @@ namespace CareNest_AppointmentDetail.API.Middleware
 
             return context.Response.WriteAsync(payload);
         }
+
     }
 }

@@ -10,12 +10,12 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Create
     public class CreateCommandHandler : ICommandHandler<CreateCommand, AppointmentDetail>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAPIService _service;
+        private readonly IAppointmentService _appointmentService;
 
-        public CreateCommandHandler(IUnitOfWork unitOfWork, IAPIService service)
+        public CreateCommandHandler(IUnitOfWork unitOfWork, IAppointmentService appointmentService)
         {
             _unitOfWork = unitOfWork;
-            _service = service;
+            _appointmentService = appointmentService;
         }
 
         public async Task<AppointmentDetail> HandleAsync(CreateCommand command)
@@ -23,7 +23,8 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Create
             // valid dữ liệu đầu vào 
             Validate.ValidateCreate(command);
             // kiểm tra appointmentId có tồn tại không
-
+            
+            var appointment = await _appointmentService.GetAppointmentById(command.AppointmentId);
             AppointmentDetail appointmentDetail = new()
             {
                 Note = command.Note,
