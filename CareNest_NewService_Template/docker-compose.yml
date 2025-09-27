@@ -1,0 +1,19 @@
+services:
+  newserviceapi:
+    image: new-service-api-dev:latest
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8015:8080"  # Thay đổi port cho service mới
+    container_name: new-service-api-dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      carenest-network:
+        ipv4_address: 192.168.0.12  # Thay đổi IP cho service mới
+
+networks:
+  carenest-network:
+    external: true
