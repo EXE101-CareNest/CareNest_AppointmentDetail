@@ -1,10 +1,11 @@
-﻿using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
+﻿using CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging;
+using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
 using CareNest_AppointmentDetail.Domain.Entitites;
 
 
 namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
 {
-    public class UpdateCommand : ICommand<AppointmentDetail>
+    public class UpdateCommand : ICommand<AppointmentDetailResponse>
     {
         public string Id { get; set; } = string.Empty;
         // Foreign Keys

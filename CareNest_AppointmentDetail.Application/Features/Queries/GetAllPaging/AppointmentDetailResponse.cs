@@ -10,6 +10,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
         // Foreign Keys
         public string? AppointmentId { get; set; } // FK
         public string? ServiceDetailId { get; set; } // FK
+        public string? ServiceDetailName { get; set; } // FK
 
         // Main Properties
         public int TotalAmount { get; set; } // tổng tiền

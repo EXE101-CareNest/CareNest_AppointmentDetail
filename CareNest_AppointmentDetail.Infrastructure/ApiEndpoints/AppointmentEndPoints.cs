@@ -3,6 +3,6 @@
     public class AppointmentEndPoints
     {
         public static string GetPaging() => "/api/appointment/";
-        public static string GetById(string id) => $"/api/appointment/{id}";
+        public static string GetById(string? id) => $"/api/appointment/{id}";
     }
 }

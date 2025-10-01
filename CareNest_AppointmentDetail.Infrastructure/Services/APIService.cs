@@ -176,6 +176,7 @@ namespace CareNest_AppointmentDetail.Infrastructure.Services
             return serviceType.ToLower() switch
             {
                 "appointment" => _option.BaseUrlAppointment,
+                "servicedetail" => _option.BaseUrlServiceDetail,
                 _ => throw new ArgumentException($"Service type '{serviceType}' không hợp lệ!", nameof(serviceType))
             };
         }

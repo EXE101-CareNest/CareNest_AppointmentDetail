@@ -1,5 +1,6 @@
 ﻿using CareNest_AppointmentDetail.Application.Exceptions;
 using CareNest_AppointmentDetail.Application.Exceptions.Validators;
+using CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
 using CareNest_AppointmentDetail.Application.Interfaces.Services;
 using CareNest_AppointmentDetail.Application.Interfaces.UOW;
@@ -9,18 +10,20 @@ using Shared.Helper;
 
 namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
 {
-    public class UpdateCommandHandler : ICommandHandler<UpdateCommand, AppointmentDetail>
+    public class UpdateCommandHandler : ICommandHandler<UpdateCommand, AppointmentDetailResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAppointmentService _appointmentService;
+        private readonly IServiceDetailService _serviceDetailService;
 
-        public UpdateCommandHandler(IUnitOfWork unitOfWork, IAppointmentService appointmentService)
+        public UpdateCommandHandler(IUnitOfWork unitOfWork, IAppointmentService appointmentService, IServiceDetailService serviceDetailService)
         {
             _unitOfWork = unitOfWork;
             _appointmentService = appointmentService;
+            _serviceDetailService = serviceDetailService;
         }
 
-        public async Task<AppointmentDetail> HandleAsync(UpdateCommand command)
+        public async Task<AppointmentDetailResponse> HandleAsync(UpdateCommand command)
         {
             // Gọi validator để kiểm tra dữ liệu
             Validate.ValidateUpdate(command);
@@ -28,22 +31,33 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
             // Tìm để cập nhật
             AppointmentDetail? appointmentDetail = await _unitOfWork.GetRepository<AppointmentDetail>().GetByIdAsync(command.Id)
                ?? throw new BadRequestException("Id: " + MessageConstant.NotFound);
-            if(!string.IsNullOrWhiteSpace(command.AppointmentId))
-            {
-                var appointment = await _appointmentService.GetAppointmentById(command.AppointmentId);
-                appointmentDetail.AppointmentId = appointment.Data!.Data!.Id;
-            }
+
+
+            var appointment = await _appointmentService.GetAppointmentById(command.AppointmentId);
+            appointmentDetail.AppointmentId = appointment.Data!.Data!.Id;
+
+
+            var serviceDetail = await _serviceDetailService.GetServiceDetailById(command.ServiceDetailId);
+            appointmentDetail.ServiceDetailId = serviceDetail.Data!.Data!.Id;
 
             appointmentDetail.Note = command.Note;
             appointmentDetail.PetQuantity = command.PetQuantity;
             appointmentDetail.ServiceDetailId = command.ServiceDetailId;
-            appointmentDetail.TotalAmount = command.TotalAmount;
+            appointmentDetail.TotalAmount = serviceDetail.Data!.Data!.Price * command.PetQuantity;
             appointmentDetail.UpdatedAt = TimeHelper.GetUtcNow();
 
             _unitOfWork.GetRepository<AppointmentDetail>().Update(appointmentDetail);
             await _unitOfWork.SaveAsync();
-            return appointmentDetail;
-
+            return new AppointmentDetailResponse
+            {
+                Id = appointmentDetail.Id,
+                AppointmentId = appointmentDetail.AppointmentId,
+                Note = appointmentDetail.Note,
+                PetQuantity = appointmentDetail.PetQuantity,
+                ServiceDetailId = appointmentDetail.ServiceDetailId,
+                ServiceDetailName = serviceDetail.Data!.Data!.Name,
+                TotalAmount = appointmentDetail.TotalAmount
+            };
         }
     }
 }

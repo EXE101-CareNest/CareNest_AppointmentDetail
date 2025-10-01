@@ -60,7 +60,7 @@ namespace CareNest_AppointmentDetail.API.Controllers
         public async Task<IActionResult> GetById(string id)
         {
             var query = new GetByIdQuery() { Id = id };
-            AppointmentDetail result = await _dispatcher.DispatchQueryAsync<GetByIdQuery, AppointmentDetail>(query);
+            AppointmentDetailResponse result = await _dispatcher.DispatchQueryAsync<GetByIdQuery, AppointmentDetailResponse>(query);
             return this.OkResponse(result, MessageConstant.SuccessGet);
         }
 
@@ -72,7 +72,7 @@ namespace CareNest_AppointmentDetail.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCommand command)
         {
-            AppointmentDetail result = await _dispatcher.DispatchAsync<CreateCommand, AppointmentDetail>(command);
+            AppointmentDetailResponse result = await _dispatcher.DispatchAsync<CreateCommand, AppointmentDetailResponse>(command);
 
             return this.OkResponse(result, MessageConstant.SuccessCreate);
         }
@@ -96,7 +96,7 @@ namespace CareNest_AppointmentDetail.API.Controllers
                 ServiceDetailId = request.ServiceDetailId,
                 TotalAmount = request.TotalAmount
             };
-            AppointmentDetail result = await _dispatcher.DispatchAsync<UpdateCommand, AppointmentDetail>(command);
+            AppointmentDetailResponse result = await _dispatcher.DispatchAsync<UpdateCommand, AppointmentDetailResponse>(command);
 
             return this.OkResponse(result, MessageConstant.SuccessUpdate);
         }

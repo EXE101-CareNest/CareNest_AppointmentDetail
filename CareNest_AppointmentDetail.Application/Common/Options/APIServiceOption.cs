@@ -3,6 +3,7 @@
     public class APIServiceOption
     {
         public string BaseUrlAppointment { get; set; } = string.Empty;
+        public string BaseUrlServiceDetail { get; set; } = string.Empty;
     }
 }
 

@@ -11,4 +11,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\CareNest_AppointmentDetail.Domain\CareNest_AppointmentDetail.Domain.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="NewFolder\" />
+	</ItemGroup>
 </Project>

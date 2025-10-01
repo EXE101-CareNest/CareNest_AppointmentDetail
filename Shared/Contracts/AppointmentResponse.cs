@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Shared.Contracts
+﻿namespace Shared.Contracts
 {
     public class AppointmentResponse
     {

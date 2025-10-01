@@ -89,12 +89,12 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 //command
-builder.Services.AddScoped<ICommandHandler<CreateCommand, AppointmentDetail>, CreateCommandHandler>();
-builder.Services.AddScoped<ICommandHandler<UpdateCommand, AppointmentDetail>, UpdateCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<CreateCommand, AppointmentDetailResponse>, CreateCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<UpdateCommand, AppointmentDetailResponse>, UpdateCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<DeleteCommand>, DeleteCommandHandler>();
 //query
 builder.Services.AddScoped<IQueryHandler<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>, GetAllPagingQueryHandler>();
-builder.Services.AddScoped<IQueryHandler<GetByIdQuery, AppointmentDetail>, GetByIdQueryHandler>();
+builder.Services.AddScoped<IQueryHandler<GetByIdQuery, AppointmentDetailResponse>, GetByIdQueryHandler>();
 builder.Services.Configure<APIServiceOption>(builder.Configuration.GetSection("APIService"));
 
 builder.Services.AddHttpClient();
@@ -213,6 +213,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 //    };
 //});
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IServiceDetailService, ServiceDetailServices>();
 
 builder.Services.AddScoped<IUseCaseDispatcher, UseCaseDispatcher>();
 
