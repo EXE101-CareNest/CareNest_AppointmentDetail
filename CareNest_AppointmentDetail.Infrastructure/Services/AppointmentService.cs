@@ -19,7 +19,7 @@ namespace CareNest_AppointmentDetail.Infrastructure.Services
             var appointment = await _apiService.GetAsync<AppointmentResponse>("appointment", AppointmentEndPoints.GetById(id));
             if (!appointment.IsSuccess)
             {
-                throw BaseException.BadRequestBadRequestResponse("Mã qui trình không tồn tại.");
+                throw BaseException.BadRequestBadRequestResponse("Appointment Id không tồn tại.");
             }
             return appointment;
         }

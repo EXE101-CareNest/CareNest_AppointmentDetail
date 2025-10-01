@@ -28,7 +28,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Create
             AppointmentDetail appointmentDetail = new()
             {
                 Note = command.Note,
-                AppointmentId = command.AppointmentId,
+                AppointmentId = appointment.Data!.Data!.Id,
                 PetQuantity = command.PetQuantity,
                 ServiceDetailId = command.ServiceDetailId,
                 TotalAmount = command.TotalAmount,

@@ -31,7 +31,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
             if(!string.IsNullOrWhiteSpace(command.AppointmentId))
             {
                 var appointment = await _appointmentService.GetAppointmentById(command.AppointmentId);
-                appointmentDetail.AppointmentId = command.AppointmentId;
+                appointmentDetail.AppointmentId = appointment.Data!.Data!.Id;
             }
 
             appointmentDetail.Note = command.Note;
