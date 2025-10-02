@@ -24,5 +24,13 @@ namespace CareNest_AppointmentDetail.Infrastructure.Services
             return appointment;
         }
 
+        public async Task<ResponseResult<AppointmentResponse>> UpdateTotalAmount(string id, double totalAmount)
+        {
+            // Gọi API PUT /api/appointment/{id}/total-amount với body là double
+            var endpoint = AppointmentEndPoints.UpdateTotalAmount(id);
+            var response = await _apiService.PutAsync<AppointmentResponse>(endpoint, totalAmount);
+            return response;
+        }
+
     }
 }

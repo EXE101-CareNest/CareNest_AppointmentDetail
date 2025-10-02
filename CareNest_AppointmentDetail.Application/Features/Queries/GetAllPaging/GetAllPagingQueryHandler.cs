@@ -2,6 +2,7 @@
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
 using CareNest_AppointmentDetail.Application.Interfaces.UOW;
 using CareNest_AppointmentDetail.Domain.Entitites;
+using System.Linq.Expressions;
 
 namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
 {
@@ -16,18 +17,23 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
 
         public async Task<PageResult<AppointmentDetailResponse>> HandleAsync(GetAllPagingQuery query)
         {
+            Expression<Func<AppointmentDetail, bool>>? predicate = null;
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+            {
+                predicate = ad => ad.AppointmentId.Contains(query.SearchTerm);
+            }
             var selector = ObjectMapperExtensions.CreateMapExpression<AppointmentDetail, AppointmentDetailResponse>();
 
             var orderByFunc = GetOrderByFunc(query.SortColumn, query.SortDirection);
 
             IEnumerable<AppointmentDetailResponse> a = await _unitOfWork.GetRepository<AppointmentDetail>().FindAsync(
-                predicate: null,
+                predicate: predicate,
                 orderBy: orderByFunc,
                 selector: selector,
                 pageSize: query.PageSize,
                 pageIndex: query.Index);
 
-            return new PageResult<AppointmentDetailResponse>(a, 1, query.PageSize, query.Index);
+            return new PageResult<AppointmentDetailResponse>(a, 1, query.Index, query.PageSize);
         }
 
 

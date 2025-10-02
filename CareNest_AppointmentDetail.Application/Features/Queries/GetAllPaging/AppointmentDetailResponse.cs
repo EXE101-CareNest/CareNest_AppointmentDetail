@@ -4,7 +4,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
     public class AppointmentDetailResponse
     {
         /// <summary>
-        /// Id cuộc hẹn 
+        /// Id cuộc hẹn   
         /// </summary>
         public string? Id { get; set; }
         // Foreign Keys

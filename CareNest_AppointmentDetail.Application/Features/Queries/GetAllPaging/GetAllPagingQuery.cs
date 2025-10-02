@@ -6,9 +6,10 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
 {
     public class GetAllPagingQuery : IQuery<PageResult<AppointmentDetailResponse>>
     {
-        public int Index { get; set; }
-        public int PageSize { get; set; }
-        public string? SortColumn { get; set; } // "Name", "Note", "CreatedAt"
-        public string? SortDirection { get; set; } // "asc" or "desc"
+        public int Index { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+        public string? SortColumn { get; set; }
+        public string? SortDirection { get; set; }
+        public string? SearchTerm { get; set; }
     }
 }

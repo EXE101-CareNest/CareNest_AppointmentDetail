@@ -5,9 +5,9 @@ using CareNest_AppointmentDetail.Application.Features.Commands.Delete;
 using CareNest_AppointmentDetail.Application.Features.Commands.Update;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetById;
+using CareNest_AppointmentDetail.Application.Features.Queries.GetTotalAmount;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS;
 using CareNest_AppointmentDetail.Domain.Commons.Constant;
-using CareNest_AppointmentDetail.Domain.Entitites;
 using CareNest_AppointmentDetail.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,13 +38,15 @@ namespace CareNest_AppointmentDetail.API.Controllers
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? sortColumn = null,
-            [FromQuery] string? sortDirection = "asc")
+            [FromQuery] string? sortDirection = "asc",
+            [FromQuery] string? searchTerm = null)
         {
             var query = new GetAllPagingQuery()
             {
                 Index = pageIndex,
                 PageSize = pageSize,
                 SortColumn = sortColumn,
+                SearchTerm = searchTerm,
                 SortDirection = sortDirection
             };
             var result = await _dispatcher.DispatchQueryAsync<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>(query);
@@ -93,8 +95,7 @@ namespace CareNest_AppointmentDetail.API.Controllers
                 Note = request.Note,
                 AppointmentId = request.AppointmentId,
                 PetQuantity = request.PetQuantity,
-                ServiceDetailId = request.ServiceDetailId,
-                TotalAmount = request.TotalAmount
+                ServiceDetailId = request.ServiceDetailId
             };
             AppointmentDetailResponse result = await _dispatcher.DispatchAsync<UpdateCommand, AppointmentDetailResponse>(command);
 
@@ -111,6 +112,20 @@ namespace CareNest_AppointmentDetail.API.Controllers
         {
             await _dispatcher.DispatchAsync(new DeleteCommand { Id = id });
             return this.OkResponse(MessageConstant.SuccessDelete);
+        }
+
+        /// <summary>
+        /// Tính tổng tiền của tất cả appointment detail có cùng appointment id
+        /// </summary>
+        /// <param name="appointmentId">Id của cuộc hẹn cần tính tổng tiền</param>
+        /// <returns>Tổng tiền và số lượng appointment detail</returns>
+        [HttpGet("total-amount/{appointmentId}")]
+        public async Task<IActionResult> GetTotalAmountByAppointmentId(string appointmentId)
+        {
+            var query = new GetTotalAmountByAppointmentIdQuery(appointmentId);
+            var result = await _dispatcher.DispatchQueryAsync<GetTotalAmountByAppointmentIdQuery, TotalAmountResponse>(query);
+
+            return this.OkResponse(result, "Tính tổng tiền thành công");
         }
     }
 }

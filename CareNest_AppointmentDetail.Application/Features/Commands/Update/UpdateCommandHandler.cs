@@ -48,6 +48,12 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
 
             _unitOfWork.GetRepository<AppointmentDetail>().Update(appointmentDetail);
             await _unitOfWork.SaveAsync();
+
+            // Sau khi cập nhật, tính lại tổng tiền cho appointment
+            var allDetails = await _unitOfWork.GetRepository<AppointmentDetail>().FindAsync(ad => ad.AppointmentId == appointmentDetail.AppointmentId);
+            var totalAmount = allDetails.Sum(ad => ad.TotalAmount);
+            await _appointmentService.UpdateTotalAmount(appointmentDetail.AppointmentId!, totalAmount);
+
             return new AppointmentDetailResponse
             {
                 Id = appointmentDetail.Id,
