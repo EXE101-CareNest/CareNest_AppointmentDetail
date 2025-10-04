@@ -24,7 +24,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Create
         public async Task<AppointmentDetailResponse> HandleAsync(CreateCommand command)
         {
             // valid dữ liệu đầu vào 
-            Validate.ValidateCreate(command);
+            //Validate.ValidateCreate(command);
 
             // kiểm tra appointmentId có tồn tại không
             var appointment = await _appointmentService.GetAppointmentById(command.AppointmentId);

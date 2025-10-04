@@ -26,7 +26,7 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
         public async Task<AppointmentDetailResponse> HandleAsync(UpdateCommand command)
         {
             // Gọi validator để kiểm tra dữ liệu
-            Validate.ValidateUpdate(command);
+            //Validate.ValidateUpdate(command);
 
             // Tìm để cập nhật
             AppointmentDetail? appointmentDetail = await _unitOfWork.GetRepository<AppointmentDetail>().GetByIdAsync(command.Id)
