@@ -1,5 +1,6 @@
 ﻿using CareNest_AppointmentDetail.Application.Common;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
+using CareNest_AppointmentDetail.Application.Interfaces.Services;
 using CareNest_AppointmentDetail.Application.Interfaces.UOW;
 using CareNest_AppointmentDetail.Domain.Entitites;
 using System.Linq.Expressions;
@@ -9,9 +10,11 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
     public class GetAllPagingQueryHandler : IQueryHandler<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IServiceDetailService _detailService;
 
-        public GetAllPagingQueryHandler(IUnitOfWork unitOfWork)
+        public GetAllPagingQueryHandler(IUnitOfWork unitOfWork, IServiceDetailService service)
         {
+            _detailService = service;
             _unitOfWork = unitOfWork;
         }
 
@@ -32,7 +35,25 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
                 selector: selector,
                 pageSize: query.PageSize,
                 pageIndex: query.Index);
-
+            var detailList = a.ToList();
+            // Load appointment details for each appointment
+            foreach (var detail in detailList)
+            {
+                if (detail.Id != null)
+                {
+                    try
+                    {
+                        var details = await _detailService.GetServiceDetailById(detail.ServiceDetailId);
+                        detail.ServiceDetailId = details.Data.Data.Id;
+                        detail.ServiceDetailName = details.Data.Data.Name;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading details for appointment {detail.Id}: {ex.Message}");
+                        detail.ServiceDetailName = null;
+                    }
+                }
+            }
             return new PageResult<AppointmentDetailResponse>(a, 1, query.Index, query.PageSize);
         }
 
