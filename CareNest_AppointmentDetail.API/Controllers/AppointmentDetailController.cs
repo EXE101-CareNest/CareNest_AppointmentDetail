@@ -61,13 +61,14 @@ namespace CareNest_AppointmentDetail.API.Controllers
         /// <param name="toDate">lọc đến ngày</param>
         /// <param name="top">số lượng top cần trả (mặc định 10)</param>
         [HttpGet("dashboard")]
-        public async Task<IActionResult> GetDashboard([FromQuery] DateTime? fromDate = null, [FromQuery] DateTime? toDate = null, [FromQuery] int top = 10)
+        public async Task<IActionResult> GetDashboard([FromQuery] DateTime? fromDate = null, [FromQuery] DateTime? toDate = null, [FromQuery] int top = 10, [FromQuery] string? appointmentId = null)
         {
             var query = new GetDashboardStatsQuery
             {
                 FromDate = fromDate,
                 ToDate = toDate,
-                Top = top <= 0 ? 10 : top
+                Top = top <= 0 ? 10 : top,
+                AppointmentId = appointmentId
             };
 
             var result = await _dispatcher.DispatchQueryAsync<GetDashboardStatsQuery, GetDashboardStatsResponse>(query);

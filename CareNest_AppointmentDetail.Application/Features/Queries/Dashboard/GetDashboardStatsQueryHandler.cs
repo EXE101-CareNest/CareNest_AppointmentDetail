@@ -22,6 +22,10 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.Dashboard
                 .GetRepository<AppointmentDetail>()
                 .Entities
                 .AsQueryable();
+            if (!string.IsNullOrWhiteSpace(query.AppointmentId))
+            {
+                appointmentDetails = appointmentDetails.Where(x => x.AppointmentId == query.AppointmentId);
+            }
 
             if (query.FromDate.HasValue)
             {
