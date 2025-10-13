@@ -7,6 +7,7 @@ using CareNest_AppointmentDetail.Application.Features.Commands.Update;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetById;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetTotalAmount;
+using CareNest_AppointmentDetail.Application.Features.Queries.Dashboard;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Commands;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS.Queries;
@@ -96,6 +97,7 @@ builder.Services.AddScoped<ICommandHandler<DeleteCommand>, DeleteCommandHandler>
 builder.Services.AddScoped<IQueryHandler<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>, GetAllPagingQueryHandler>();
 builder.Services.AddScoped<IQueryHandler<GetByIdQuery, AppointmentDetailResponse>, GetByIdQueryHandler>();
 builder.Services.AddScoped<IQueryHandler<GetTotalAmountByAppointmentIdQuery, TotalAmountResponse>, GetTotalAmountByAppointmentIdQueryHandler>();
+builder.Services.AddScoped<IQueryHandler<GetDashboardStatsQuery, GetDashboardStatsResponse>, GetDashboardStatsQueryHandler>();
 builder.Services.Configure<APIServiceOption>(builder.Configuration.GetSection("APIService"));
 
 builder.Services.AddHttpClient();

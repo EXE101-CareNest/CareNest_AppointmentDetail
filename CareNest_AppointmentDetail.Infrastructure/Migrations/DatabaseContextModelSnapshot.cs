@@ -51,6 +51,15 @@ namespace CareNest_AppointmentDetail.Infrastructure.Migrations
                     b.Property<string>("ServiceDetailId")
                         .HasColumnType("text");
 
+                    b.Property<string>("ServiceDetailName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceName")
+                        .HasColumnType("text");
+
                     b.Property<int>("TotalAmount")
                         .HasColumnType("integer");
 

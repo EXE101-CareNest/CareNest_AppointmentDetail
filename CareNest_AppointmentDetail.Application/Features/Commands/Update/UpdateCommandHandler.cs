@@ -43,7 +43,11 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
             appointmentDetail.Note = command.Note;
             appointmentDetail.PetQuantity = command.PetQuantity;
             appointmentDetail.ServiceDetailId = command.ServiceDetailId;
-            appointmentDetail.TotalAmount = serviceDetail.Data!.Data!.Price * command.PetQuantity;
+            appointmentDetail.ServiceId = serviceDetail.Data!.Data!.ServiceId;
+            appointmentDetail.ServiceName = serviceDetail.Data!.Data!.ServiceName;
+            appointmentDetail.ServiceDetailName = serviceDetail.Data!.Data!.Name;
+            var unitPrice = serviceDetail.Data!.Data!.Price ?? 0;
+            appointmentDetail.TotalAmount = unitPrice * command.PetQuantity;
             appointmentDetail.UpdatedAt = TimeHelper.GetUtcNow();
 
             _unitOfWork.GetRepository<AppointmentDetail>().Update(appointmentDetail);
@@ -61,7 +65,8 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Update
                 Note = appointmentDetail.Note,
                 PetQuantity = appointmentDetail.PetQuantity,
                 ServiceDetailId = appointmentDetail.ServiceDetailId,
-                ServiceDetailName = serviceDetail.Data!.Data!.Name,
+                ServiceDetailName = appointmentDetail.ServiceDetailName,
+                ServiceName = appointmentDetail.ServiceName,
                 TotalAmount = appointmentDetail.TotalAmount
             };
         }

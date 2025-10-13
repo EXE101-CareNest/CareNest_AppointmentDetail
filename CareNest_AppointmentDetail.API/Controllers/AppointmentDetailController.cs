@@ -6,6 +6,7 @@ using CareNest_AppointmentDetail.Application.Features.Commands.Update;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetById;
 using CareNest_AppointmentDetail.Application.Features.Queries.GetTotalAmount;
+using CareNest_AppointmentDetail.Application.Features.Queries.Dashboard;
 using CareNest_AppointmentDetail.Application.Interfaces.CQRS;
 using CareNest_AppointmentDetail.Domain.Commons.Constant;
 using CareNest_AppointmentDetail.Extensions;
@@ -51,6 +52,26 @@ namespace CareNest_AppointmentDetail.API.Controllers
             };
             var result = await _dispatcher.DispatchQueryAsync<GetAllPagingQuery, PageResult<AppointmentDetailResponse>>(query);
             return this.OkResponse(result, MessageConstant.SuccessGet);
+        }
+
+        /// <summary>
+        /// Dashboard: Top service/service detail theo số lượt đặt, filter theo CreatedAt
+        /// </summary>
+        /// <param name="fromDate">lọc từ ngày (UTC hoặc local theo hệ thống)</param>
+        /// <param name="toDate">lọc đến ngày</param>
+        /// <param name="top">số lượng top cần trả (mặc định 10)</param>
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> GetDashboard([FromQuery] DateTime? fromDate = null, [FromQuery] DateTime? toDate = null, [FromQuery] int top = 10)
+        {
+            var query = new GetDashboardStatsQuery
+            {
+                FromDate = fromDate,
+                ToDate = toDate,
+                Top = top <= 0 ? 10 : top
+            };
+
+            var result = await _dispatcher.DispatchQueryAsync<GetDashboardStatsQuery, GetDashboardStatsResponse>(query);
+            return this.OkResponse(result, "Lấy dashboard thành công");
         }
 
         /// <summary>

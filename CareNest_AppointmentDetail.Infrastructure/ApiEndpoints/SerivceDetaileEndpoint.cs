@@ -3,5 +3,6 @@
     public class SerivceDetaileEndpoint
     {
         public static string GetById(string? id) => $"/api/servicedetail/{id}";
+        public static string GetByIds() => "/api/servicedetail/by-ids";
     }
 }

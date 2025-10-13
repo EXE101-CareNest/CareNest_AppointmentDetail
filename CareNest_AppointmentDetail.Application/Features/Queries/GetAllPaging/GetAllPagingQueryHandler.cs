@@ -46,11 +46,13 @@ namespace CareNest_AppointmentDetail.Application.Features.Queries.GetAllPaging
                         var details = await _detailService.GetServiceDetailById(detail.ServiceDetailId);
                         detail.ServiceDetailId = details.Data.Data.Id;
                         detail.ServiceDetailName = details.Data.Data.Name;
+                        detail.ServiceName = details.Data.Data.ServiceName;
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Error loading details for appointment {detail.Id}: {ex.Message}");
                         detail.ServiceDetailName = null;
+                        detail.ServiceName = null;
                     }
                 }
             }

@@ -32,13 +32,17 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Create
             // kiểm tra service detail Id có tồn tại không
             var serviceDetail = await _serviceDetailService.GetServiceDetailById(command.ServiceDetailId);
 
-            var totalPrice = serviceDetail.Data!.Data!.Price * command.PetQuantity;
+            var unitPrice = serviceDetail.Data!.Data!.Price ?? 0;
+            var totalPrice = unitPrice * command.PetQuantity;
             AppointmentDetail appointmentDetail = new()
             {
                 Note = command.Note,
                 AppointmentId = appointment.Data!.Data!.Id,
                 PetQuantity = command.PetQuantity,
                 ServiceDetailId = serviceDetail.Data!.Data!.Id,
+                ServiceId = serviceDetail.Data!.Data!.ServiceId,
+                ServiceName = serviceDetail.Data!.Data!.ServiceName,
+                ServiceDetailName = serviceDetail.Data!.Data!.Name,
                 TotalAmount = totalPrice,
                 CreatedAt = TimeHelper.GetUtcNow()
             };
@@ -58,7 +62,8 @@ namespace CareNest_AppointmentDetail.Application.Features.Commands.Create
                 Note = appointmentDetail.Note,
                 PetQuantity = appointmentDetail.PetQuantity,
                 ServiceDetailId = appointmentDetail.ServiceDetailId,
-                ServiceDetailName = serviceDetail.Data!.Data!.Name,
+                ServiceDetailName = appointmentDetail.ServiceDetailName,
+                ServiceName = appointmentDetail.ServiceName,
                 TotalAmount = appointmentDetail.TotalAmount
             };
         }

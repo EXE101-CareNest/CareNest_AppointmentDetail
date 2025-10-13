@@ -12,5 +12,7 @@ namespace CareNest_AppointmentDetail.Application.Interfaces.Services
 
         Task<ResponseResult<T>> DeleteAsync<T>(string url);
 
+        string GetBaseUrl(string serviceType);
+
     }
 }
