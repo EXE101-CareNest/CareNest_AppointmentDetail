@@ -125,15 +125,19 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
-                .AllowAnyOrigin()
+                .SetIsOriginAllowed(origin =>
+                {
+                    Console.WriteLine($"CORS Origin requested: {origin}");
+                    return true; // Cho phép tất cả origin (phù hợp với môi trường dev/test)
+                })
                 .AllowAnyMethod()
-                .AllowAnyHeader();
+                .AllowAnyHeader()
+                .AllowCredentials();
         });
 });
 
 
 var app = builder.Build();
-app.UseCors("AllowAll");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -148,6 +152,10 @@ using (var scope = app.Services.CreateScope())
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
+
+// Thứ tự middleware quan trọng cho CORS
+app.UseRouting();
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
