@@ -30,8 +30,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
-// Lấy DatabaseSettings từ configuration
-DatabaseSettings dbSettings = builder.Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>()!;
+// Lấy DatabaseSettings theo ENV ưu tiên, fallback về appsettings (chuẩn cloud)
+var config = builder.Configuration;
+DatabaseSettings dbSettings = new DatabaseSettings
+{
+    Ip       = config["DB_HOST"] ?? config["DatabaseSettings:Ip"],
+    Port     = int.TryParse(config["DB_PORT"], out var port) ? port : (config.GetSection("DatabaseSettings").GetValue<int?>("Port") ?? 5432),
+    User     = config["DB_USER"] ?? config["DatabaseSettings:User"],
+    Password = config["DB_PASSWORD"] ?? config["DatabaseSettings:Password"],
+    Database = config["DB_NAME"] ?? config["DatabaseSettings:Database"]
+};
 dbSettings.Display();
 string connectionString = dbSettings.GetConnectionString();
 
