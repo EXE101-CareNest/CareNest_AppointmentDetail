@@ -19,11 +19,7 @@ namespace CareNest_AppointmentDetail.Infrastructure.Services
         {
             _httpClient = httpClient;
             _option = option.Value;
-            // Chỉ set BaseAddress khi URL hợp lệ để tránh UriFormatException khi chạy trong môi trường thiếu biến
-            if (Uri.TryCreate(_option.BaseUrlAppointment, UriKind.Absolute, out var baseUri))
-            {
-                _httpClient.BaseAddress = baseUri;
-            }
+            // Không set BaseAddress để tránh phụ thuộc vào URL hợp lệ ngay lúc khởi tạo
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
