@@ -107,7 +107,17 @@ builder.Services.AddScoped<IQueryHandler<GetAllPagingQuery, PageResult<Appointme
 builder.Services.AddScoped<IQueryHandler<GetByIdQuery, AppointmentDetailResponse>, GetByIdQueryHandler>();
 builder.Services.AddScoped<IQueryHandler<GetTotalAmountByAppointmentIdQuery, TotalAmountResponse>, GetTotalAmountByAppointmentIdQueryHandler>();
 builder.Services.AddScoped<IQueryHandler<GetDashboardStatsQuery, GetDashboardStatsResponse>, GetDashboardStatsQueryHandler>();
-builder.Services.Configure<APIServiceOption>(builder.Configuration.GetSection("APIService"));
+// Cấu hình APIServiceOption: ưu tiên ENV rồi mới tới appsettings
+var apiServiceSection = builder.Configuration.GetSection("APIService");
+builder.Services.Configure<APIServiceOption>(options =>
+{
+    options.BaseUrlAppointment = Environment.GetEnvironmentVariable("BASE_URL_APPOINTMENT")
+        ?? apiServiceSection["BaseUrlAppointment"]
+        ?? string.Empty;
+    options.BaseUrlServiceDetail = Environment.GetEnvironmentVariable("BASE_URL_SERVICEDETAIL")
+        ?? apiServiceSection["BaseUrlServiceDetail"]
+        ?? string.Empty;
+});
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IAPIService, APIService>();

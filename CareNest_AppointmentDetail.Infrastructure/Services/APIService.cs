@@ -19,7 +19,11 @@ namespace CareNest_AppointmentDetail.Infrastructure.Services
         {
             _httpClient = httpClient;
             _option = option.Value;
-            _httpClient.BaseAddress = new Uri(option.Value.BaseUrlAppointment);
+            // Chỉ set BaseAddress khi URL hợp lệ để tránh UriFormatException khi chạy trong môi trường thiếu biến
+            if (Uri.TryCreate(_option.BaseUrlAppointment, UriKind.Absolute, out var baseUri))
+            {
+                _httpClient.BaseAddress = baseUri;
+            }
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
@@ -173,12 +177,17 @@ namespace CareNest_AppointmentDetail.Infrastructure.Services
 
         public string GetBaseUrl(string serviceType)
         {
-            return serviceType.ToLower() switch
+            var url = serviceType.ToLower() switch
             {
                 "appointment" => _option.BaseUrlAppointment,
                 "servicedetail" => _option.BaseUrlServiceDetail,
                 _ => throw new ArgumentException($"Service type '{serviceType}' không hợp lệ!", nameof(serviceType))
             };
+            if (string.IsNullOrWhiteSpace(url) || !Uri.TryCreate(url, UriKind.Absolute, out _))
+            {
+                throw new ArgumentException($"Base URL cho service '{serviceType}' không hợp lệ hoặc chưa được cấu hình.");
+            }
+            return url;
         }
     }
 }
