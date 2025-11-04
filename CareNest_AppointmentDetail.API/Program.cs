@@ -32,16 +32,34 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 // Lấy DatabaseSettings theo ENV ưu tiên, fallback về appsettings (chuẩn cloud)
 var config = builder.Configuration;
-DatabaseSettings dbSettings = new DatabaseSettings
+string? databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL") ?? config["DATABASE_URL"];
+string connectionString;
+if (!string.IsNullOrWhiteSpace(databaseUrl))
 {
-    Ip       = config["DB_HOST"] ?? config["DatabaseSettings:Ip"],
-    Port     = int.TryParse(config["DB_PORT"], out var port) ? port : (config.GetSection("DatabaseSettings").GetValue<int?>("Port") ?? 5432),
-    User     = config["DB_USER"] ?? config["DatabaseSettings:User"],
-    Password = config["DB_PASSWORD"] ?? config["DatabaseSettings:Password"],
-    Database = config["DB_NAME"] ?? config["DatabaseSettings:Database"]
-};
-dbSettings.Display();
-string connectionString = dbSettings.GetConnectionString();
+    // Hỗ trợ Koyeb/Heroku style: postgres://user:pass@host:port/db
+    var uri = new Uri(databaseUrl);
+    var userInfo = uri.UserInfo.Split(':');
+    var user = userInfo.Length > 0 ? userInfo[0] : string.Empty;
+    var password = userInfo.Length > 1 ? userInfo[1] : string.Empty;
+    var host = uri.Host;
+    var port = uri.Port > 0 ? uri.Port : 5432;
+    var database = uri.AbsolutePath.TrimStart('/');
+    connectionString = $"Host={host};Port={port};Database={database};Username={user};Password={password}";
+    Console.WriteLine("DATABASE_URL detected -> using parsed connection string");
+}
+else
+{
+    DatabaseSettings dbSettings = new DatabaseSettings
+    {
+        Ip       = config["DB_HOST"] ?? config["DatabaseSettings:Ip"],
+        Port     = int.TryParse(config["DB_PORT"], out var port) ? port : (config.GetSection("DatabaseSettings").GetValue<int?>("Port") ?? 5432),
+        User     = config["DB_USER"] ?? config["DatabaseSettings:User"],
+        Password = config["DB_PASSWORD"] ?? config["DatabaseSettings:Password"],
+        Database = config["DB_NAME"] ?? config["DatabaseSettings:Database"]
+    };
+    dbSettings.Display();
+    connectionString = dbSettings.GetConnectionString();
+}
 
 
 // Đăng ký DbContext với PostgreSQL
